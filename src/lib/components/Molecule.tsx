@@ -2,6 +2,7 @@ import type { RDKitModule } from "@rdkit/rdkit";
 import React, {useEffect, useState} from "react";
 
 declare global {
+    // eslint-disable-next-line no-unused-vars
     interface Window {
         RDKit: RDKitModule;
     }
