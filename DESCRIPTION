@@ -1,0 +1,13 @@
+Package: dashChemicalFlow
+Title: reactflow in dash
+Version: 0.0.1
+Description: reactflow in dash
+Depends: R (>= 3.0.2)
+Imports: 
+Suggests: 
+License: MIT + file LICENSE
+URL: https://github.com/pragmatic-dash/dash-chemical-flow
+BugReports: https://github.com/pragmatic-dash/dash-chemical-flow/issues
+Encoding: UTF-8
+LazyData: true
+KeepSource: true

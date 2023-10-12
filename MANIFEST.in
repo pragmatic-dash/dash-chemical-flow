@@ -1,0 +1,11 @@
+include dash_chemical_flow/dash_chemical_flow.min.js
+include dash_chemical_flow/dash_chemical_flow.min.js.map
+include dash_chemical_flow/async-*.js
+include dash_chemical_flow/async-*.js.map
+include dash_chemical_flow/*-shared.js
+include dash_chemical_flow/*-shared.js.map
+include dash_chemical_flow/metadata.json
+include dash_chemical_flow/package-info.json
+include README.md
+include LICENSE
+include package.json

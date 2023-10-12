@@ -1,0 +1,27 @@
+.dashChemicalFlow_js_metadata <- function() {
+deps_metadata <- list(`dash_chemical_flow` = structure(list(name = "dash_chemical_flow",
+version = "0.0.1", src = list(href = NULL,
+file = "deps"), meta = NULL,
+script = 'async-DashChemicalFlow.js',
+stylesheet = NULL, head = NULL, attachment = NULL, package = "dashChemicalFlow",
+all_files = FALSE, async = TRUE), class = "html_dependency"),
+`dash_chemical_flow` = structure(list(name = "dash_chemical_flow",
+version = "0.0.1", src = list(href = NULL,
+file = "deps"), meta = NULL,
+script = 'async-DashChemicalFlow.js.map',
+stylesheet = NULL, head = NULL, attachment = NULL, package = "dashChemicalFlow",
+all_files = FALSE, dynamic = TRUE), class = "html_dependency"),
+`dash_chemical_flow` = structure(list(name = "dash_chemical_flow",
+version = "0.0.1", src = list(href = NULL,
+file = "deps"), meta = NULL,
+script = 'dash_chemical_flow.min.js',
+stylesheet = NULL, head = NULL, attachment = NULL, package = "dashChemicalFlow",
+all_files = FALSE), class = "html_dependency"),
+`dash_chemical_flow` = structure(list(name = "dash_chemical_flow",
+version = "0.0.1", src = list(href = NULL,
+file = "deps"), meta = NULL,
+script = 'dash_chemical_flow.min.js.map',
+stylesheet = NULL, head = NULL, attachment = NULL, package = "dashChemicalFlow",
+all_files = FALSE, dynamic = TRUE), class = "html_dependency"))
+return(deps_metadata)
+}
