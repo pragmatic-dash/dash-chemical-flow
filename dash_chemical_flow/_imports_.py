@@ -1,5 +1,5 @@
-from .DashChemicalFlow import DashChemicalFlow
+from .ChemicalFlow import ChemicalFlow
 
 __all__ = [
-    "DashChemicalFlow"
+    "ChemicalFlow"
 ]

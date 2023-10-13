@@ -1,1 +1,1 @@
-export const DashChemicalFlow = React.lazy(() => import(/* webpackChunkName: "DashChemicalFlow" */ './fragments/DashChemicalFlow.react'));
+export const ChemicalFlow = React.lazy(() => import(/* webpackChunkName: "ChemicalFlow" */ './fragments/ChemicalFlow'));

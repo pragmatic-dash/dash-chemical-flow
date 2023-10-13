@@ -1,16 +1,16 @@
 % Auto-generated: do not edit by hand
-\name{dashChemicalFlow}
+\name{ChemicalFlow}
 
-\alias{dashChemicalFlow}
+\alias{ChemicalFlow}
 
-\title{DashChemicalFlow component}
+\title{ChemicalFlow component}
 
 \description{
 ExampleComponent is an example component. It takes a property, `label`, and displays it. It renders an input with the property `value` which is editable by the user.
 }
 
 \usage{
-dashChemicalFlow(id=NULL, label=NULL, value=NULL)
+ChemicalFlow(id=NULL, label=NULL, value=NULL)
 }
 
 \arguments{

@@ -3,8 +3,8 @@
 from dash.development.base_component import Component, _explicitize_args
 
 
-class DashChemicalFlow(Component):
-    """A DashChemicalFlow component.
+class ChemicalFlow(Component):
+    """A ChemicalFlow component.
 ExampleComponent is an example component.
 It takes a property, `label`, and
 displays it.
@@ -24,7 +24,7 @@ Keyword arguments:
     _children_props = []
     _base_nodes = ['children']
     _namespace = 'dash_chemical_flow'
-    _type = 'DashChemicalFlow'
+    _type = 'ChemicalFlow'
     @_explicitize_args
     def __init__(self, id=Component.UNDEFINED, label=Component.REQUIRED, value=Component.UNDEFINED, **kwargs):
         self._prop_names = ['id', 'label', 'value']
@@ -41,4 +41,4 @@ Keyword arguments:
                 raise TypeError(
                     'Required argument `' + k + '` was not specified.')
 
-        super(DashChemicalFlow, self).__init__(**args)
+        super(ChemicalFlow, self).__init__(**args)

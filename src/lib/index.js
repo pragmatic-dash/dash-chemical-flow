@@ -1,6 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import DashChemicalFlow from './components/DashChemicalFlow.react';
-
+import ChemicalFlow from './components/ChemicalFlow';
 export {
-    DashChemicalFlow
+    ChemicalFlow,
 };

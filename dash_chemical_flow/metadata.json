@@ -1,7 +1,7 @@
 {
-  "src/lib/components/DashChemicalFlow.react.js": {
+  "src/lib/components/ChemicalFlow.js": {
     "description": "ExampleComponent is an example component.\nIt takes a property, `label`, and\ndisplays it.\nIt renders an input with the property `value`\nwhich is editable by the user.",
-    "displayName": "DashChemicalFlow",
+    "displayName": "ChemicalFlow",
     "methods": [],
     "props": {
       "id": {
@@ -24,6 +24,27 @@
         },
         "required": false,
         "description": "The value displayed in the input."
+      },
+      "nodes": {
+        "type": {
+          "name": "array"
+        },
+        "required": false,
+        "description": "Nodes to display.\nExample:\n[\n    {\n        'id': '1',\n        'data': {'value': 'c1ccccc1', 'label': 'c1ccccc1'},\n        'type': 'molecule',\n        'sourcePosition': 'right'\n    },\n    {\n        'id': '2',\n        'type': 'molecule',\n        'data': {'value': 'CCO', 'label': 'CCO'}\n    },\n    {\n        'id': '3',\n        'type': 'molecule',\n        'data': {'value': 'CC(=O)Oc1ccccc1C(=O)O', 'label': 'CC(=O)Oc1ccccc1C(=O)O'}\n    }\n]"
+      },
+      "edges": {
+        "type": {
+          "name": "array"
+        },
+        "required": false,
+        "description": "The Edges to connect nodes.\nExample:\n[\n   {\n       'id': '1-2',\n       'source': '1',\n       'target': '2',\n       'label': '+',\n       'type': 'step',\n       'animated': true,\n   },\n   {\n       'id': '2-3',\n       'source': '2',\n       'target': '3',\n       'label': 'expert',\n       'type': 'molecule',\n       'animated': true,\n       'data': {'catalyst': 'CCO'},\n       'markerEnd': {'type': 'arrow', 'color': '#000'},\n   }\n]"
+      },
+      "height": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "Default height: 240px"
       },
       "setProps": {
         "type": {

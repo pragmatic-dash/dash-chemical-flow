@@ -1,4 +1,7 @@
 # AUTO GENERATED FILE - DO NOT EDIT
 
-export(DashChemicalFlow)
-export(dashChemicalFlow)
+export(ChemicalFlow)
+export(moleculeItem)
+export(molecule)
+export(ChemicalFlow)
+export(chemicalFlow)

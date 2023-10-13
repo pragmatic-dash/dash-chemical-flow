@@ -44,6 +44,9 @@ module.exports = (env, argv) => {
     });
 
     return {
+        resolve: {
+            extensions: [".ts", ".tsx", ".js", ".jsx"]
+        },
         mode,
         entry,
         output: {
@@ -63,10 +66,17 @@ module.exports = (env, argv) => {
         module: {
             rules: [
                 {
-                    test: /\.jsx?$/,
+                    test: /\.[jt]sx?$/,
                     exclude: /node_modules/,
                     use: {
                         loader: 'babel-loader',
+                        options: {
+                            presets: [
+                                ['@babel/preset-env'],
+                                ['@babel/preset-react', {runtime: 'classic'}],
+                                ['@babel/preset-typescript']
+                            ]
+                        }
                     },
                 },
                 {

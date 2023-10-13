@@ -1,11 +1,11 @@
 # AUTO GENERATED FILE - DO NOT EDIT
 
-export dashchemicalflow
+export ChemicalFlow
 
 """
-    dashchemicalflow(;kwargs...)
+    ChemicalFlow(;kwargs...)
 
-A DashChemicalFlow component.
+A ChemicalFlow component.
 ExampleComponent is an example component.
 It takes a property, `label`, and
 displays it.
@@ -16,9 +16,9 @@ Keyword arguments:
 - `label` (String; required): A label that will be printed when this component is rendered.
 - `value` (String; optional): The value displayed in the input.
 """
-function dashchemicalflow(; kwargs...)
+function ChemicalFlow(; kwargs...)
         available_props = Symbol[:id, :label, :value]
         wild_props = Symbol[]
-        return Component("dashchemicalflow", "DashChemicalFlow", "dash_chemical_flow", available_props, wild_props; kwargs...)
+        return Component("ChemicalFlow", "ChemicalFlow", "dash_chemical_flow", available_props, wild_props; kwargs...)
 end
 

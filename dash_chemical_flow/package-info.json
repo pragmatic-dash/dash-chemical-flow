@@ -2,7 +2,7 @@
   "name": "dash_chemical_flow",
   "version": "0.0.1",
   "description": "reactflow in dash",
-"repository": {
+  "repository": {
     "type": "git",
     "url": "git://github.com/pragmatic-dash/dash-chemical-flow.git"
   },
@@ -24,20 +24,27 @@
   "author": "liupeng.dalian@gmail.com <liupeng.dalian@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "ramda": "^0.26.1"
+    "@babel/preset-typescript": "^7.23.2",
+    "@dagrejs/dagre": "^1.0.4",
+    "@rdkit/rdkit": "^2023.3.3-1.0.0",
+    "antd": "^5.10.0",
+    "eslint": "^8.51.0",
+    "ramda": "^0.26.1",
+    "reactflow": "^11.9.3",
+    "typescript-eslint-parser": "^22.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.22.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
-    "@babel/preset-env": "^7.22.2",
-    "@babel/preset-react": "^7.22.3",
+    "@babel/preset-env": "^7.23.2",
+    "@babel/preset-react": "^7.22.15",
     "@plotly/dash-component-plugins": "^1.2.3",
     "@plotly/webpack-dash-dynamic-import": "^1.2.0",
+    "@typescript-eslint/parser": "^6.7.5",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^9.1.2",
     "copyfiles": "^2.1.1",
     "css-loader": "^6.8.1",
-    "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-react": "^7.14.2",
@@ -47,9 +54,14 @@
     "react-dom": "^16.8.6",
     "style-loader": "^3.3.3",
     "styled-jsx": "^3.2.1",
+    "typescript": "^5.2.2",
     "webpack": "^5.84.1",
     "webpack-cli": "^5.1.1",
     "webpack-dev-server": "^4.15.0"
+  },
+  "browser": {
+    "fs": false,
+    "path": false
   },
   "engines": {
     "node": ">=8.11.0",
