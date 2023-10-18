@@ -548,7 +548,6 @@ app.layout = html.Div(
     [
         dash_chemical_flow.ChemicalFlow(
             id="input",
-            value="my-value",
             label="my-label",
             nodes=DRY_RUN_DATA["nodes"],
             edges=DRY_RUN_DATA["edges"],
@@ -558,7 +557,7 @@ app.layout = html.Div(
 )
 
 
-@callback(Output("output", "children"), Input("input", "value"))
+@callback(Output("output", "children"), Input("input", "selectionEvent"))
 def display_output(value):
     return "You have entered {}".format(value)
 

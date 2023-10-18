@@ -1,6 +1,6 @@
 {
   "name": "dash_chemical_flow",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "reactflow in dash",
   "repository": {
     "type": "git",

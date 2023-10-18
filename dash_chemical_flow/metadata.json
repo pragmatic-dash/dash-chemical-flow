@@ -18,13 +18,6 @@
         "required": true,
         "description": "A label that will be printed when this component is rendered."
       },
-      "value": {
-        "type": {
-          "name": "string"
-        },
-        "required": false,
-        "description": "The value displayed in the input."
-      },
       "nodes": {
         "type": {
           "name": "array"
@@ -45,6 +38,13 @@
         },
         "required": false,
         "description": "Default height: 240px"
+      },
+      "selectionEvent": {
+        "type": {
+          "name": "any"
+        },
+        "required": false,
+        "description": "selectionEvent\ntype:\nnode:\nedge:"
       },
       "setProps": {
         "type": {

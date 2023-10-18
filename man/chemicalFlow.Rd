@@ -11,7 +11,7 @@ ExampleComponent is an example component. It takes a property, `label`, and disp
 
 \usage{
 chemicalFlow(id=NULL, edges=NULL, height=NULL, label=NULL, nodes=NULL,
-value=NULL)
+selectionEvent=NULL)
 }
 
 \arguments{
@@ -65,7 +65,10 @@ Example:
     }
 ]}
 
-\item{value}{Character. The value displayed in the input.}
+\item{selectionEvent}{Logical | numeric | character | named list | unnamed list. selectionEvent
+type:
+node:
+edge:}
 }
 
 \value{named list of JSON elements corresponding to React.js properties and their values}

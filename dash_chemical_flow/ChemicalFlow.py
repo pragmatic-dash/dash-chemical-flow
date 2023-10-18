@@ -41,17 +41,17 @@ Keyword arguments:
     'CC(=O)Oc1ccccc1C(=O)O', 'label': 'CC(=O)Oc1ccccc1C(=O)O'}     }
     ].
 
-- value (string; optional):
-    The value displayed in the input."""
+- selectionEvent (boolean | number | string | dict | list; optional):
+    selectionEvent type: node: edge:."""
     _children_props = []
     _base_nodes = ['children']
     _namespace = 'dash_chemical_flow'
     _type = 'ChemicalFlow'
     @_explicitize_args
-    def __init__(self, id=Component.UNDEFINED, label=Component.REQUIRED, value=Component.UNDEFINED, nodes=Component.UNDEFINED, edges=Component.UNDEFINED, height=Component.UNDEFINED, **kwargs):
-        self._prop_names = ['id', 'edges', 'height', 'label', 'nodes', 'value']
+    def __init__(self, id=Component.UNDEFINED, label=Component.REQUIRED, nodes=Component.UNDEFINED, edges=Component.UNDEFINED, height=Component.UNDEFINED, selectionEvent=Component.UNDEFINED, **kwargs):
+        self._prop_names = ['id', 'edges', 'height', 'label', 'nodes', 'selectionEvent']
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'edges', 'height', 'label', 'nodes', 'value']
+        self.available_properties = ['id', 'edges', 'height', 'label', 'nodes', 'selectionEvent']
         self.available_wildcard_properties =            []
         _explicit_args = kwargs.pop('_explicit_args')
         _locals = locals()

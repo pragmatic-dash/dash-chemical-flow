@@ -26,6 +26,16 @@ import MoleculeEdge from "./MoleculeEdge";
 const nodeWidth = 172;
 const nodeHeight = 36;
 const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
+
+enum SelectionEventType {
+    NODE = "node",
+    EDGE = "edge"
+}
+interface SelectionEvent {
+    type: SelectionEventType;
+    nodes?: Node[],
+    edges?: Edge[]
+}
 const getLayoutElements = (nodes: Node[], edges: Edge[], direction = 'LR') => {
 
     const isHorizontal = direction === 'LR';
@@ -76,7 +86,7 @@ const defaultViewport = { x: 0, y: 0, zoom: 0.25 };
  * which is editable by the user.
  */
 const ChemicalFlow = (props) => {
-    const {id, label, setProps, value, nodes, edges, height} = props;
+    const {id, label, setProps, nodes, edges, height, selectionEvent} = props;
     const [rdkitLoaded, setRdkitLoaded] = useState(false);
 
     useEffect(() => {
@@ -119,17 +129,24 @@ const ChemicalFlow = (props) => {
         console.log('Node clicked:', node);
         if (node.type === "molecule") {
             console.log('Molecule clicked:', node);
+            setProps({selectionEvent: {
+                    type: SelectionEventType.NODE,
+                    nodes: [node]
+                }})
         } else {
             console.log("skip node event for type")
+
         }
     };
-
 
     const onEdgeClick = (event: React.MouseEvent, edge: any) => {
         // Handle node click event
         console.log('Edge clicked:', edge);
+        setProps({selectionEvent: {
+                type: SelectionEventType.EDGE,
+                edges: [edge]
+        }})
     };
-
 
     // auto layout
     getLayoutElements(
@@ -212,11 +229,6 @@ ChemicalFlow.propTypes = {
     label: PropTypes.string.isRequired,
 
     /**
-     * The value displayed in the input.
-     */
-    value: PropTypes.string,
-
-    /**
      * Nodes to display.
      * Example:
      * [
@@ -269,6 +281,14 @@ ChemicalFlow.propTypes = {
     /**
      * Default height: 240px*/
     height: PropTypes.string,
+
+    /**
+     * selectionEvent
+     * type:
+     * node:
+     * edge:
+     */
+    selectionEvent: PropTypes.any,
 
     /**
      * Dash-assigned callback that should be called to report property changes

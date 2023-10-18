@@ -57,10 +57,13 @@ Example:
         'data': {'value': 'CC(=O)Oc1ccccc1C(=O)O', 'label': 'CC(=O)Oc1ccccc1C(=O)O'}
     }
 ]
-- `value` (String; optional): The value displayed in the input.
+- `selectionEvent` (Bool | Real | String | Dict | Array; optional): selectionEvent
+type:
+node:
+edge:
 """
 function chemicalflow(; kwargs...)
-        available_props = Symbol[:id, :edges, :height, :label, :nodes, :value]
+        available_props = Symbol[:id, :edges, :height, :label, :nodes, :selectionEvent]
         wild_props = Symbol[]
         return Component("chemicalflow", "ChemicalFlow", "dash_chemical_flow", available_props, wild_props; kwargs...)
 end

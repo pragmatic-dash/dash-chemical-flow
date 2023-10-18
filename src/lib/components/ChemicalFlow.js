@@ -31,11 +31,6 @@ ChemicalFlow.propTypes = {
     label: PropTypes.string.isRequired,
 
     /**
-     * The value displayed in the input.
-     */
-    value: PropTypes.string,
-
-    /**
      * Nodes to display.
      * Example:
      * [
@@ -88,6 +83,15 @@ ChemicalFlow.propTypes = {
     /**
      * Default height: 240px*/
     height: PropTypes.string,
+
+    /**
+     * selectionEvent
+     * type:
+     * node:
+     * edge:
+     */
+    selectionEvent: PropTypes.any,
+
     /**
      * Dash-assigned callback that should be called to report property changes
      * to Dash, to make them available for callbacks.
