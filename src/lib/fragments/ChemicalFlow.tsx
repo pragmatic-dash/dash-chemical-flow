@@ -62,16 +62,16 @@ const getLayoutElements = (nodes: Node[], edges: Edge[], direction = 'LR') => {
 
         // We are shifting the dagre node position (anchor=center center) to the top left
         // so it matches the React ChemicalFlow node anchor point (top left).
+        // x: nodeWithPosition.x - nodeWidth / 2,
         node.position = {
-            x: nodeWithPosition.x - nodeWidth / 2,
+            x: nodeWithPosition.x,
             y: nodeWithPosition.y - nodeHeight / 2,
         };
         if (node.type === "reaction") {
             node.position = {
-                x: nodeWithPosition.x - nodeWidth / 2,
+                x: nodeWithPosition.x,
                 y: nodeWithPosition.y + 15,
             };
-            console.log("re allocate reaction node position " + node.id + "y " + node.position.y)
         }
 
         return node;
@@ -83,7 +83,8 @@ const nodeTypes = {molecule: MoleculeNode, reaction: ReactionNode};
 const edgeTypes = {
   molecule: MoleculeEdge,
 };
-const defaultViewport = { x: 0, y: 0 };
+
+// const defaultViewport = { x: 0, y: 0 };
 
 /**
  * ExampleComponent is an example component.
@@ -95,6 +96,7 @@ const defaultViewport = { x: 0, y: 0 };
 const ChemicalFlow = (props) => {
     const {id, label, setProps, nodes, edges, height, selectionEvent} = props;
     const [rdkitLoaded, setRdkitLoaded] = useState(false);
+    const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
     useEffect(() => {
         window.initRDKitModule().then((rdkit) => {
@@ -102,6 +104,17 @@ const ChemicalFlow = (props) => {
             setRdkitLoaded(true);
         });
     }, []);
+
+    const onLoad = (rf) => {
+        setReactFlowInstance(rf);
+    };
+
+    useEffect(() => {
+        if (reactFlowInstance) {
+            setTimeout(() => reactFlowInstance.fitView( {padding: 100}), 0)
+            setTimeout(() => reactFlowInstance.setViewport({x: -1000, y:0, zoom:1}), 0)
+        }
+    }, [reactFlowInstance]);
 
     // def events
     const [
@@ -172,7 +185,8 @@ const ChemicalFlow = (props) => {
                        nodeTypes={nodeTypes}
                        edgeTypes={edgeTypes}
                        fitView
-                       defaultViewport={defaultViewport}
+                       onLoad={onLoad}
+                       // defaultViewport={defaultViewport}
                        attributionPosition="top-left" >
                 <Controls />
             </ReactFlow>
