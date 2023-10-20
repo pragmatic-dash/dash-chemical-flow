@@ -66,6 +66,13 @@ const getLayoutElements = (nodes: Node[], edges: Edge[], direction = 'LR') => {
             x: nodeWithPosition.x - nodeWidth / 2,
             y: nodeWithPosition.y - nodeHeight / 2,
         };
+        if (node.type === "reaction") {
+            node.position = {
+                x: nodeWithPosition.x - nodeWidth / 2,
+                y: nodeWithPosition.y + 15,
+            };
+            console.log("re allocate reaction node position " + node.id + "y " + node.position.y)
+        }
 
         return node;
     });
@@ -76,7 +83,7 @@ const nodeTypes = {molecule: MoleculeNode, reaction: ReactionNode};
 const edgeTypes = {
   molecule: MoleculeEdge,
 };
-const defaultViewport = { x: 0, y: 0, zoom: 0.25 };
+const defaultViewport = { x: 0, y: 0 };
 
 /**
  * ExampleComponent is an example component.
@@ -95,8 +102,6 @@ const ChemicalFlow = (props) => {
             setRdkitLoaded(true);
         });
     }, []);
-
-    console.log("height:" + height)
 
     // def events
     const [
@@ -173,45 +178,6 @@ const ChemicalFlow = (props) => {
             </ReactFlow>
         </div>
     );
-//     ------------------ original output -----------------
-//         return (
-//         <div id={id}>
-//             ExampleComponent: {label}&nbsp;
-//
-//         <div>
-//             {rdkitLoaded ? (
-//                     <span
-//                         dangerouslySetInnerHTML={{
-//                     __html: window.RDKit.get_mol("CCO").get_svg(),
-//                 }}
-//     />
-// ) : (
-//         "Loading..."
-//     )}
-//         </div>
-//             <label>bbbbbbbbbbb</label>
-//             <div id="example-1-output" className="ml-6 column"></div>
-//             <script>
-//                console.log("aaa")
-//             </script>
-//
-//             <input
-//                 value={value}
-//                 onChange={
-//                     /*
-//                         * Send the new value to the parent component.
-//                         * setProps is a prop that is automatically supplied
-//                         * by dash's front-end ("dash-renderer").
-//                         * In a Dash app, this will update the component's
-//                         * props and send the data back to the Python Dash
-//                         * app server if a callback uses the modified prop as
-//                         * Input or State.
-//                         */
-//                     e => setProps({value: e.target.value})
-//                 }
-//             />
-//         </div>
-//     );
 
 }
 

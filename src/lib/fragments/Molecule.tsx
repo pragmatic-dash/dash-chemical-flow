@@ -25,7 +25,9 @@ function Molecule(props: MoleculeProps) {
             {rdkitLoaded ? (
                     <span
                         dangerouslySetInnerHTML={{
-                    __html: window.RDKit.get_mol(props.smiles).get_svg(80, 60),
+                    __html: window.RDKit.get_mol(props.smiles).get_svg(80, 60).
+                    replace("<rect style='opacity:1.0", "<rect style='opacity: 0").
+                    replace("fill:#FFFFFF;", ""),
                 }}
     />
 ) : (
