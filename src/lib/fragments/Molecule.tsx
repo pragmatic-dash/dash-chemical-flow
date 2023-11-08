@@ -1,5 +1,6 @@
 import type { RDKitModule } from "@rdkit/rdkit";
 import React, {useEffect, useState} from "react";
+import "./molecule.css"
 
 declare global {
     // eslint-disable-next-line no-unused-vars
@@ -31,7 +32,7 @@ function Molecule(props: MoleculeProps) {
                 }}
     />
 ) : (
-        "Loading..."
+                <span className="loading-span">Loading...</span>
     )}
         </div>
 );

@@ -185,7 +185,7 @@ const ChemicalFlow = (props) => {
                        nodeTypes={nodeTypes}
                        edgeTypes={edgeTypes}
                        fitView
-                       onLoad={onLoad}
+                       // onLoad={onLoad}
                        // defaultViewport={defaultViewport}
                        attributionPosition="top-left" >
                 <Controls />

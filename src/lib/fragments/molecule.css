@@ -1,0 +1,7 @@
+.loading-span {
+  display: inline-block; /* Allows width and height to be set */
+  width: 80px; /* Set the width */
+  height: 60px; /* Set the height */
+  line-height: 60px; /* Center the text vertically */
+  text-align: center; /* Center the text horizontally */
+}

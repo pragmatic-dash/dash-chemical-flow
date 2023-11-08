@@ -2,6 +2,681 @@ import dash_chemical_flow
 from dash import Dash, callback, html, Input, Output
 
 app = Dash(__name__)
+workflow = {
+    "nodes": [
+        {
+            "id": "a1",
+            "data": {
+                "value": "COc1ccc(I)c(C(=O)O)c1",
+                "label": "COc1ccc(I)c(C(=O)O)c1",
+                "commercial": True,
+                "price": "19.89¥/g"
+            },
+            "type": "molecule"
+        },
+        {
+            "id": "a2",
+            "data": {
+                "value": "c1c[nH]nn1",
+                "label": "c1c[nH]nn1",
+                "commercial": True,
+                "price": "1.494¥/g"
+            },
+            "type": "molecule"
+        },
+        {
+            "id": "a3",
+            "data": {
+                "value": "+",
+                "label": "+"
+            },
+            "type": "reaction",
+            "label": "+"
+        },
+        {
+            "id": "a4",
+            "data": {
+                "value": "COc1ccc(-n2nccn2)c(C(=O)O)c1",
+                "label": "COc1ccc(-n2nccn2)c(C(=O)O)c1",
+                "commercial": False
+            },
+            "type": "molecule"
+        },
+        {
+            "id": "a5",
+            "data": {
+                "value": "C[C@@]1(C(=O)O)CCCN1",
+                "label": "C[C@@]1(C(=O)O)CCCN1",
+                "commercial": True,
+                "price": "99.2¥/g"
+            },
+            "type": "molecule"
+        },
+        {
+            "id": "a6",
+            "data": {
+                "value": "+",
+                "label": "+"
+            },
+            "type": "reaction",
+            "label": "+"
+        },
+        {
+            "id": "a7",
+            "data": {
+                "value": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1",
+                "label": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1",
+                "commercial": False
+            },
+            "type": "molecule"
+        },
+        {
+            "id": "a8",
+            "data": {
+                "value": "Cc1c(Cl)ccc(N)c1N",
+                "label": "Cc1c(Cl)ccc(N)c1N",
+                "commercial": True,
+                "price": "281.0¥/g"
+            },
+            "type": "molecule"
+        },
+        {
+            "id": "a9",
+            "data": {
+                "value": "+",
+                "label": "+"
+            },
+            "type": "reaction",
+            "label": "+"
+        },
+        {
+            "id": "a10",
+            "data": {
+                "value": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "label": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "commercial": False
+            },
+            "type": "molecule"
+        }
+    ],
+    "edges": [
+        {
+            "id": "1-3",
+            "source": "a1",
+            "target": "a3",
+            "type": "step",
+            "animated": True
+        },
+        {
+            "id": "2-3",
+            "source": "a2",
+            "target": "a3",
+            "type": "step",
+            "animated": True
+        },
+        {
+            "id": "3-4",
+            "source": "a3",
+            "label": "database",
+            "data": {
+                "catalyst": ""
+            },
+            "target": "a4",
+            "type": "molecule",
+            "animated": True,
+            "markerEnd": {
+                "type": "arrowclosed",
+                "color": "#000",
+                "width": 20,
+                "height": 20
+            }
+        },
+        {
+            "id": "4-6",
+            "source": "a4",
+            "target": "a6",
+            "type": "step",
+            "animated": True
+        },
+        {
+            "id": "5-6",
+            "source": "a5",
+            "target": "a6",
+            "type": "step",
+            "animated": True
+        },
+        {
+            "id": "6-7",
+            "source": "a6",
+            "label": "similarity",
+            "data": {
+                "catalyst": ""
+            },
+            "target": "a7",
+            "type": "molecule",
+            "animated": True,
+            "markerEnd": {
+                "type": "arrowclosed",
+                "color": "#000",
+                "width": 20,
+                "height": 20
+            }
+        },
+        {
+            "id": "7-9",
+            "source": "a7",
+            "target": "a9",
+            "type": "step",
+            "animated": True
+        },
+        {
+            "id": "8-9",
+            "source": "a8",
+            "target": "a9",
+            "type": "step",
+            "animated": True
+        },
+        {
+            "id": "9-10",
+            "source": "a9",
+            "label": "expert_system",
+            "data": {
+                "catalyst": ""
+            },
+            "target": "a10",
+            "type": "molecule",
+            "animated": True,
+            "markerEnd": {
+                "type": "arrowclosed",
+                "color": "#000",
+                "width": 20,
+                "height": 20
+            }
+        }
+    ],
+    "backup_reactions": {
+        "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1": [
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CC=C[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1>[H][H].[Pd].CO>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CC#C[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1>[H][H].[Pd]>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "CB(O)O.COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(Br)c3[nH]2)c1>O.C1=CC=C(C=C1)P(C2=CC=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P(C2=CC=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P(C2=CC=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P(C2=CC=CC=C2)C3=CC=CC=C3.[Pd].Cc1ccccc1.CO.[Na+].[Na+].[O-]C([O-])=O>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "CB1OC(C)(C)C(C)(C)O1.COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(Br)c3[nH]2)c1>O.C1=CC=C(C=C1)P(C2=CC=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P(C2=CC=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P(C2=CC=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P(C2=CC=CC=C2)C3=CC=CC=C3.[Pd].Cc1ccccc1.CO.[Na+].[Na+].[O-]C([O-])=O>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(N)c(C)c3[nH]2)c1>CC#N.Cl[Cu]Cl>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2ncc(N)n2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1>O.Cl.N(=O)[O-].[Na+].CCO.O>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1cc(N)c(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1>O.Cl.N(=O)[O-].[Na+].CCO.O>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1cc(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c(-n2nccn2)cc1N>O.Cl.N(=O)[O-].[Na+].CCO.O>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1N>O.Cl.N(=O)[O-].[Na+].CCO.O>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3c(N)cc(Cl)c(C)c3[nH]2)c1>O.Cl.N(=O)[O-].[Na+].CCO.O>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3cc(N)c(Cl)c(C)c3[nH]2)c1>O.Cl.N(=O)[O-].[Na+].CCO.O>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COS(=O)(=O)OC.Cc1c(Cl)ccc2nc([C@]3(C)CCCN3C(=O)c3cc(O)ccc3-n3nccn3)[nH]c12>CC(C)=O.C(=O)([O-])[O-].[K+].[K+]>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)O)c1.Cc1c(Cl)ccc2nc([C@]3(C)CCCN3)[nH]c12>OCCN(CCO)CCO.[Cl-].CCN(CCC[NH+](C)C)C#N.CN(C)C=O>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3n2COCC[Si](C)(C)C)c1>NC1=NC(=O)N(C=C1)[C@H]2C[C@H](O)[C@@H](CO[P](O)(O)=O)O2.OC(=O)C(F)(F)F>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3n2Cc2ccccc2)c1>[H][H].[Pd].CO>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "C=C(c1cc(OC)ccc1-n1nccn1)N1CCC[C@@]1(C)c1nc2ccc(Cl)c(C)c2[nH]1>[O-][O+]=O.CO>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "Cc1c(Cl)ccc2nc([C@]3(C)CCCN3C(=O)c3cc(O)ccc3-n3nccn3)[nH]c12>COS(=O)(=O)OC.CN(C)C=O.C(=O)([O-])[O-].[K+].[K+]>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3n2C(c2ccccc2)(c2ccccc2)c2ccccc2)c1>C1COCCO1.Cl>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(Cn2c([C@]3(C)CCCN3C(=O)c3cc(OC)ccc3-n3nccn3)nc3ccc(Cl)c(C)c32)cc1>NC1=NC(=O)N(C=C1)[C@H]2C[C@H](O)[C@@H](CO[P](O)(O)=O)O2.OC(=O)C(F)(F)F>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(Br)c1.Cc1c(Cl)ccc2nc([C@]3(C)CCCN3)[nH]c12>C1=CC=C(C=C1)P(C2=CC=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P(C2=CC=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P(C2=CC=CC=C2)C3=CC=CC=C3.C1=CC=C(C=C1)P(C2=CC=CC=C2)C3=CC=CC=C3.[Pd].C[S](C)=O.CCN(C(C)C)C(C)C>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)Nc2c(N)ccc(Cl)c2C)c1>>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3n2C2CCCCO2)c1>O.Cl>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(CO)c3[nH]2)c1>Cl.[H][H].CCO.[Pd]>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3n2C(=O)OC(C)(C)C)c1>NC1=NC(=O)N(C=C1)[C@H]2C[C@H](O)[C@@H](CO[P](O)(O)=O)O2.OC(=O)C(F)(F)F>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)Cl)c1.Cc1c(Cl)ccc2nc([C@]3(C)CCCN3)[nH]c12>NC1=NC(=O)N(C=C1)[C@H]2C[C@H](O)[C@@H](CO[P](O)(O)=O)O2.OCCN(CCO)CCO>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1.Cc1c(Cl)ccc(N)c1N>CN(C)C(=[O+]n1nnc2cccnc12)N(C)C.F[P-](F)(F)(F)(F)F.CN(C)C=O.CCN(C(C)C)C(C)C>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3n2C(C)=O)c1>[OH-].[Na+].CO>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "CCC(C)(C)OC(=O)n1c([C@]2(C)CCCN2C(=O)c2cc(OC)ccc2-n2nccn2)nc2ccc(Cl)c(C)c21>[Na+].OC([O-])=O.CO>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(NN)c(C)c3[nH]2)c1>CC#N.C1(=O)N(C(=O)N(C(=O)N1Cl)Cl)Cl>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3n2S(=O)(=O)CC[Si](C)(C)C)c1>C1CCOC1.O.O.O.[F-].CCCC[N+](CCCC)(CCCC)CCCC>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3n2S(C)(=O)=O)c1>[OH-].[Na+].CO>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3n2S(=O)(=O)C(F)(F)F)c1>CO.C(=O)([O-])[O-].[K+].[K+]>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3n2S(=O)(=O)c2ccccc2)c1>O.CO.[OH-].[Na+]>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(I)c1.Cc1c(Cl)ccc2nc([C@]3(C)CCCN3)[nH]c12>Cc1ccccc1.C(=O)([O-])[O-].[K+].[K+].[Pd](OC(C)=O)OC(C)=O.C1=CC=C(C=C1)P(C2=CC=CC=C2)C3=CC=CC=C3>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3n2C(C)(C)C)c1>COO>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)Cl)c1.Cc1c(Cl)ccc(N)c1N>OCCN(CCO)CCO.NC1=NC(=O)N(C=C1)[C@H]2C[C@H](O)[C@@H](CO[P](O)(O)=O)O2>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(N)=Nc2ccc(Cl)c(C)c2Br)c1>CNCCNC.C(=O)([O-])[O-].[K+].[K+].C1COCCO1.[Cu]I>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(N)=Nc2ccc(Cl)c(C)c2I)c1>CNCCNC.C(=O)([O-])[O-].[K+].[K+].C1COCCO1.[Cu]I>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "CO[Na].Cc1c(Cl)ccc2nc([C@]3(C)CCCN3C(=O)c3cc(I)ccc3-n3nccn3)[nH]c12>CN(C)C=O.CO.[Cu]I>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COCn1c([C@]2(C)CCCN2C(=O)c2cc(OC)ccc2-n2nccn2)nc2ccc(Cl)c(C)c21>O.Cl>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C=O)c1.Cc1c(Cl)ccc(N)c1[N+](=O)[O-]>CCO.[O-]S(=O)S(=O)[O-].[Na+].[Na+]>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)[B-](F)(F)F)c1.[K+].Cc1c(Cl)ccc2nc(Cl)[nH]c12>O.[Na+].[Na+].[O-]C([O-])=O.C1COCCO1>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N[C@@](C)(CCCBr)c2nc3ccc(Cl)c(C)c3[nH]2)c1>[H-].[Na+].C1CCOC1>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N[C@@](C)(CCCI)c2nc3ccc(Cl)c(C)c3[nH]2)c1>[H-].[Na+].C1CCOC1>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N[C@@](C)(CCCOS(C)(=O)=O)c2nc3ccc(Cl)c(C)c3[nH]2)c1>[H-].[Na+].C1CCOC1>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N[C@@](C)(CCCOS(=O)(=O)c2ccc(C)cc2)c2nc3ccc(Cl)c(C)c3[nH]2)c1>[H-].[Na+].C1CCOC1>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N[C@@](C)(CCCOS(=O)(=O)C(F)(F)F)c2nc3ccc(Cl)c(C)c3[nH]2)c1>[H-].[Na+].C1CCOC1>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)Oc2c(Cl)cc(Cl)cc2Cl)c1.Cc1c(Cl)ccc2nc([C@]3(C)CCCN3)[nH]c12>OCCN(CCO)CCO.C1CCOC1>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "Cc1c(Cl)ccc2nc([C@]3(C)CCCN3C(=O)c3cc(N)ccc3-n3nccn3)[nH]c12>Cl.CO.N(=O)[O-].[Na+]>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(B(O)O)c(C)c3[nH]2)c1>[Cl-].[Cu+].CC#N>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)ON2C(=O)CCC2=O)c1.Cc1c(Cl)ccc2nc([C@]3(C)CCCN3)[nH]c12>CN(C)C=O.CCN(C(C)C)C(C)C>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C=O)c1.Cc1c(Cl)ccc([N+](=O)[O-])c1N>CCO.[O-]S(=O)S(=O)[O-].[Na+].[Na+]>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(CCl)c3[nH]2)c1>[Zn].CCO>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "expert_system",
+                "confidence_score": 0.8,
+                "probability": 0.8
+            },
+            {
+                "smiles": "Cc1c(Cl)ccc2nc([C@]3(C)CCCN3C(=O)c3cc(F)ccc3-n3nccn3)[nH]c12>COc1ccc(I)c(C(=O)O)c1.O=C(O)c1cc(F)ccc1I>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "similarity",
+                "confidence_score": 0.42424243688583374,
+                "probability": -0.12521551549434662
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)Nc2ccc(Cl)c(C)c2N)c1>>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "transformer_network",
+                "confidence_score": -0.04267781600356102,
+                "probability": -0.07558560371398926
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)O)c1.Cc1c(Cl)ccc2nc([C@@]3(C)CCCN3)[nH]c12>>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "transformer_network",
+                "confidence_score": -0.060306668281555176,
+                "probability": -0.06755616515874863
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCCC2(C)c2nc3ccc(Cl)c(C)c3n2COCC[Si](C)(C)C)c1>>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3ccc(Cl)c(C)c3[nH]2)c1",
+                "reaction_type": "unimol",
+                "confidence_score": -6.134176731109619,
+                "probability": -0.12802264094352722
+            }
+        ],
+        "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1": [
+            {
+                "smiles": "COC(=O)[C@]1(C)CCCN1C(=O)c1cc(OC)ccc1-n1nccn1>CO.O[Na]>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1",
+                "reaction_type": "database",
+                "confidence_score": 1,
+                "probability": 1
+            },
+            {
+                "smiles": "C[C@@]1(C(=O)O)CCCN1C(=O)c1cc(F)ccc1-n1nccn1>COc1ccc(I)c(C(=O)O)c1.O=C(O)c1cc(F)ccc1I>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1",
+                "reaction_type": "similarity",
+                "confidence_score": 0.5800000131130219,
+                "probability": -0.1068539023399353
+            },
+            {
+                "smiles": "COc1ccc(I)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1.c1c[nH]nn1>O=C(O)c1cccc(-n2ccc(C(F)(F)F)n2)c1>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1",
+                "reaction_type": "similarity",
+                "confidence_score": 0.5800000131130219,
+                "probability": -0.09788434952497482
+            },
+            {
+                "smiles": "CCOC(=O)[C@]1(C)CCCN1C(=O)c1cc(OC)ccc1-n1nccn1>O.CCO.O[Na]>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1",
+                "reaction_type": "similarity",
+                "confidence_score": 0.4363636374473572,
+                "probability": -0.09341540932655334
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)O)c1.C[C@@]1(C(=O)O)CCCN1>Cc1cc(C)nc(N2C[C@@H]3CCNC[C@@H]32)n1.O=C(O)c1ccccc1-c1cccs1>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1",
+                "reaction_type": "similarity",
+                "confidence_score": 0.43421053886413574,
+                "probability": 0
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)Cl)c1.C[C@@]1(C(=O)O)CCCN1>CCN(CC)CC.ClCCl>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1",
+                "reaction_type": "similarity",
+                "confidence_score": 0.4285714030265808,
+                "probability": -0.20377855002880096
+            },
+            {
+                "smiles": "COC(=O)[C@@]1(C)CCCN1C(=O)c1cc(OC)ccc1-n1nccn1>>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1",
+                "reaction_type": "transformer_network",
+                "confidence_score": -0.07035081088542938,
+                "probability": -0.09458772093057632
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)[O-])c1>>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1",
+                "reaction_type": "transformer_network",
+                "confidence_score": -0.1351894736289978,
+                "probability": -0.11803625524044037
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)O)c1.C[C@]1(C(=O)O)CCCN1>>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1",
+                "reaction_type": "transformer_network",
+                "confidence_score": -0.14947395026683807,
+                "probability": -0.09298502653837204
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)OCc2ccccc2)c1>>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1",
+                "reaction_type": "transformer_network",
+                "confidence_score": -0.15171797573566437,
+                "probability": -0.08790042251348495
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)N2CCCC2(C)C(=O)OC(C)(C)C)c1>>COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)C(=O)O)c1",
+                "reaction_type": "unimol",
+                "confidence_score": -3.8154542446136475,
+                "probability": -0.16713565587997437
+            }
+        ],
+        "COc1ccc(-n2nccn2)c(C(=O)O)c1": [
+            {
+                "smiles": "O=C(O)c1cc(F)ccc1-n1nccn1>COc1ccc(I)c(C(=O)O)c1.O=C(O)c1cc(F)ccc1I>COc1ccc(-n2nccn2)c(C(=O)O)c1",
+                "reaction_type": "database",
+                "confidence_score": 1,
+                "probability": 1
+            },
+            {
+                "smiles": "COc1ccc(I)c(C(=O)O)c1.c1c[nH]nn1>CN(C)C=O.O=C(O[Cs])O[Cs].[Cu]I>COc1ccc(-n2nccn2)c(C(=O)O)c1",
+                "reaction_type": "database",
+                "confidence_score": 1,
+                "probability": 1
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)O[K])c1>O.COC(C)(C)C>COc1ccc(-n2nccn2)c(C(=O)O)c1",
+                "reaction_type": "database",
+                "confidence_score": 1,
+                "probability": 1
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(I)c1>CC(C)[Mg]Cl>COc1ccc(-n2nccn2)c(C(=O)O)c1",
+                "reaction_type": "database",
+                "confidence_score": 1,
+                "probability": 1
+            },
+            {
+                "smiles": "COc1ccc(I)c(C(=O)O)c1.c1cn[nH]n1>>COc1ccc(-n2nccn2)c(C(=O)O)c1",
+                "reaction_type": "database",
+                "confidence_score": 1,
+                "probability": 1
+            },
+            {
+                "smiles": "COc1ccc(Br)c(C(=O)O)c1.c1cn[nH]n1>CN[C@@H]1CCCC[C@H]1NC.CCOC(C)=O.O=C(O[Cs])O[Cs].C1COCCO1.O>COc1ccc(-n2nccn2)c(C(=O)O)c1",
+                "reaction_type": "similarity",
+                "confidence_score": 0.7777777761220932,
+                "probability": -0.11192844063043594
+            },
+            {
+                "smiles": "COc1ccc(Br)c(C(=O)O)c1.c1c[nH]nn1>CO.CN[C@H]1CCCC[C@@H]1NC.CN(C)C=O.O=C(O[Cs])O[Cs].[Cu]I>COc1ccc(-n2nccn2)c(C(=O)O)c1",
+                "reaction_type": "similarity",
+                "confidence_score": 0.6486486494541168,
+                "probability": -0.11164479702711105
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C#N)c1>Cl.O[Na]>COc1ccc(-n2nccn2)c(C(=O)O)c1",
+                "reaction_type": "similarity",
+                "confidence_score": 0.6486486494541168,
+                "probability": -0.11898676306009293
+            },
+            {
+                "smiles": "COc1ccc(-n2nccn2)c(C(=O)O[Na])c1>O>COc1ccc(-n2nccn2)c(C(=O)O)c1",
+                "reaction_type": "similarity",
+                "confidence_score": 0.6486486494541168,
+                "probability": -0.13990871608257294
+            },
+            {
+                "smiles": "COC(=O)c1cc(OC)ccc1-n1nccn1>>COc1ccc(-n2nccn2)c(C(=O)O)c1",
+                "reaction_type": "unimol",
+                "confidence_score": -2.821465015411377,
+                "probability": -0.12816283106803894
+            },
+            {
+                "smiles": "COc1ccc(I)c(C(=O)O)c1.O=C(O)c1ccccc1-n1nccn1>>COc1ccc(-n2nccn2)c(C(=O)O)c1",
+                "reaction_type": "unimol",
+                "confidence_score": -4.799795627593994,
+                "probability": -0.11633466929197311
+            }
+        ]
+    }
+}
 
 DRY_RUN_DATA = {
     "nodes": [
@@ -546,20 +1221,43 @@ DRY_RUN_DATA = {
 
 app.layout = html.Div(
     [
-        dash_chemical_flow.ChemicalFlow(
-            id="input",
-            label="my-label",
-            nodes=DRY_RUN_DATA["nodes"],
-            edges=DRY_RUN_DATA["edges"],
+        html.Div(
+            [
+                dash_chemical_flow.ChemicalFlow(
+                    id="workflow",
+                    label="my-label",
+                    nodes=DRY_RUN_DATA["nodes"],
+                    edges=DRY_RUN_DATA["edges"],
+                    # nodes=workflow["nodes"],
+                    # edges=workflow["edges"],
+                )
+            ],
+            id="view"
         ),
-        html.Div(id="output"),
+        html.Button("change workflow data", id="btn")
     ]
 )
 
 
-@callback(Output("output", "children"), Input("input", "selectionEvent"))
-def display_output(value):
-    return "You have entered {}".format(value)
+@callback(
+    [
+        Output("view", "children"),
+    ],
+    Input("btn", "n_clicks"),
+    prevent_initial_call=True
+
+)
+def rerender_workflow(n_clicks):
+    return [
+        dash_chemical_flow.ChemicalFlow(
+            id="workflow-2",
+            label="my-label",
+            # nodes=DRY_RUN_DATA["nodes"],
+            # edges=DRY_RUN_DATA["edges"],
+            nodes=workflow["nodes"],
+            edges=workflow["edges"],
+        )
+    ]
 
 
 if __name__ == "__main__":
