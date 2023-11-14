@@ -23,8 +23,10 @@ import MoleculeNode from "./MoleculeNode";
 import ReactionNode from "./ReactionNode";
 import MoleculeEdge from "./MoleculeEdge";
 
-const nodeWidth = 172;
-const nodeHeight = 36;
+const nodeWidth = 100;
+const nodeHeight = 80;
+// const nodeWidth = 172;
+// const nodeHeight = 36;
 const g = new Dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
 
 enum SelectionEventType {
@@ -39,7 +41,8 @@ interface SelectionEvent {
 const getLayoutElements = (nodes: Node[], edges: Edge[], direction = 'LR') => {
 
     const isHorizontal = direction === 'LR';
-    g.setGraph({ rankdir: direction });
+    g.setGraph({ rankdir: direction , ranksep: 120, nodesep: 20, edgesep: 0, ranker: "longest-path"});
+    // g.setGraph({ rankdir: direction});
 
     nodes.forEach((node) => {
         g.setNode(node.id, { width: nodeWidth, height: nodeHeight });
@@ -52,7 +55,10 @@ const getLayoutElements = (nodes: Node[], edges: Edge[], direction = 'LR') => {
     Dagre.layout(g);
 
     nodes.forEach((node: Node) => {
+
         const nodeWithPosition = g.node(node.id);
+        // console.log("iterate node " + node.id + " rank " + nodeWithPosition.rank);
+
         if (!(node.sourcePosition)) {
             node.sourcePosition = isHorizontal ? 'right' as Position : 'bottom' as Position;
         }
@@ -68,10 +74,24 @@ const getLayoutElements = (nodes: Node[], edges: Edge[], direction = 'LR') => {
             y: nodeWithPosition.y - nodeHeight / 2,
         };
         if (node.type === "reaction") {
-            node.position = {
-                x: nodeWithPosition.x,
-                y: nodeWithPosition.y + 15,
-            };
+            // get previous node
+            const previousNode = g.predecessors(node.id)[0];
+            const previousNodeWithPosition = g.node(previousNode);
+            node.position.x = previousNodeWithPosition.x + 180;
+
+            const rank = nodeWithPosition.rank
+
+            // get nodes with bigger rank
+            const biggerRankNodes = g.nodes().filter((nodeId) => {
+                return g.node(nodeId).rank === rank + 2 || g.node(nodeId).rank === rank;
+            });
+
+            // give bigger rank nodes a smaller x position
+            biggerRankNodes.forEach((nodeId) => {
+                const biggerRankNodesWithPosition = g.node(nodeId);
+                biggerRankNodesWithPosition.x = biggerRankNodesWithPosition.x - 100;
+                g.setNode(nodeId, biggerRankNodesWithPosition);
+            });
         }
 
         return node;
@@ -105,9 +125,9 @@ const ChemicalFlow = (props) => {
         });
     }, []);
 
-    const onLoad = (rf) => {
-        setReactFlowInstance(rf);
-    };
+    // const onLoad = (rf) => {
+    //     setReactFlowInstance(rf);
+    // };
 
     useEffect(() => {
         if (reactFlowInstance) {
@@ -174,8 +194,8 @@ const ChemicalFlow = (props) => {
     );
 
     return (
-        <div style={{ width: '100%', height: height || '500px' }}>
-            <ReactFlow nodes={nodesStates}
+        <div style={{ width: '100%', height: height || '600px' }}>
+            {rdkitLoaded ? <ReactFlow nodes={nodesStates}
                        edges={edgesStates}
                        onNodesChange={onNodesChange}
                        onEdgesChange={onEdgesChange}
@@ -189,7 +209,7 @@ const ChemicalFlow = (props) => {
                        // defaultViewport={defaultViewport}
                        attributionPosition="top-left" >
                 <Controls />
-            </ReactFlow>
+            </ReactFlow>: <span className="loading-span">Loading...</span>}
         </div>
     );
 
