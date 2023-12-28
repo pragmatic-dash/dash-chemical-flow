@@ -19,7 +19,10 @@ function Molecule(props: MoleculeProps) {
         <div>
             <span
                 dangerouslySetInnerHTML={{
-                    __html: window.RDKit.get_mol(props.smiles).get_svg(100, 80).replace('<rect style=\'opacity:1.0', '<rect style=\'opacity: 0').replace('fill:#FFFFFF;', ''),
+                    __html: window.RDKit.get_mol(props.smiles).get_svg(100, 80)
+                        .replace('<rect style=\'opacity:1.0', '<rect style=\'opacity: 0')
+                        .replace('fill:#FFFFFF;', '')
+                        .replace(/stroke-width:2\.0px;/g, 'stroke-width:0.5px;'),
                 }}
             />
         </div>

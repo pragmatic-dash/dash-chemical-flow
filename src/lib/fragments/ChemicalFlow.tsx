@@ -77,7 +77,12 @@ const getLayoutElements = (nodes: Node[], edges: Edge[], direction = 'LR') => {
             // get previous node
             const previousNode = g.predecessors(node.id)[0];
             const previousNodeWithPosition = g.node(previousNode);
+
+            // get next node
+            const nextNode = g.successors(node.id)[0];
+            const nextNodeWithPosition = g.node(nextNode);
             node.position.x = previousNodeWithPosition.x + 180;
+            node.position.y = previousNodeWithPosition.y + nodeHeight / 2 + 10;
 
             const rank = nodeWithPosition.rank
 
