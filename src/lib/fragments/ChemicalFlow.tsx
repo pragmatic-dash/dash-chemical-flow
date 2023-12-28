@@ -1,6 +1,8 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import 'reactflow/dist/style.css';
+import './ChemicalFlow.css'
+import DownloadButton from './downloadButton';
 
 import Dagre from '@dagrejs/dagre';
 import ReactFlow, {
@@ -214,6 +216,7 @@ const ChemicalFlow = (props) => {
                        // defaultViewport={defaultViewport}
                        attributionPosition="top-left" >
                 <Controls />
+                <DownloadButton />
             </ReactFlow>: <span className="loading-span">Loading...</span>}
         </div>
     );
